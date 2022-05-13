@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { addUser } from "../service/serviceUser";
+import { addUser, afficheUser } from "../service/serviceUser";
+import { withNavigate } from "../tools/navigate";
 
 class FormInsc extends Component {
     constructor(props) {
@@ -23,9 +24,11 @@ class FormInsc extends Component {
 
     confirm = (e) => {
         e.preventDefault()
-        addUser({...this.state.user}).then(res => {
+        addUser({...this.state.user})
+        .then(res => {
             if(res.data.error == false) {
-                this.props.navigate("/login")
+                // this.props.navigate("/login")
+                alert("user ajouter")
             }else{
                 alert("donnée manquante")
             }
@@ -34,6 +37,7 @@ class FormInsc extends Component {
 
     state = {  }
     render() { 
+        const users = afficheUser()
         return ( 
             <form onSubmit={this.confirm}>
                 <div>
@@ -60,6 +64,10 @@ class FormInsc extends Component {
                     <button type="submit">
                         validation
                     </button>
+                </div>
+
+                <div>
+                    {users}
                 </div>
             </form>
          );
