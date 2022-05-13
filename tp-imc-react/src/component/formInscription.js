@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { addUser, afficheUser } from "../service/serviceUser";
+import { Link } from "react-router-dom";
+import { addUser } from "../service/serviceUser";
 import { withNavigate } from "../tools/navigate";
 
 class FormInsc extends Component {
@@ -27,8 +28,7 @@ class FormInsc extends Component {
         addUser({...this.state.user})
         .then(res => {
             if(res.data.error == false) {
-                // this.props.navigate("/login")
-                alert("user ajouter")
+                this.props.navigate("/login")
             }else{
                 alert("donnée manquante")
             }
@@ -37,7 +37,6 @@ class FormInsc extends Component {
 
     state = {  }
     render() { 
-        const users = afficheUser()
         return ( 
             <form onSubmit={this.confirm}>
                 <div>
@@ -46,7 +45,7 @@ class FormInsc extends Component {
                 </div>
                 <div>
                     <label>Password : </label>
-                    <input type="text" name="mdp" onChange={this.fieldsOnChange} placeholder="Password"/>
+                    <input type="password" name="mdp" onChange={this.fieldsOnChange} placeholder="Password"/>
                 </div>
                 <div>
                     <label>Age : </label>
@@ -65,10 +64,12 @@ class FormInsc extends Component {
                         validation
                     </button>
                 </div>
-
                 <div>
-                    {users}
-                </div>
+                si vous disposez d'un compte?
+            </div>
+            <Link to="/connexion">
+                <div>connexion</div>
+            </Link>
             </form>
          );
     }

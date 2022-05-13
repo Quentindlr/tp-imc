@@ -7,6 +7,6 @@ export const addUser =(user) =>{
     // users.push(user)
 }
 
-export const afficheUser = () =>{
-    return users
+export const log=(user) =>{
+    return axios.post("http://localhost/login",{...user})
 }
