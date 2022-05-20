@@ -10,3 +10,7 @@ export const addUser =(user) =>{
 export const log=(user) =>{
     return axios.post("http://localhost/login",{...user})
 }
+
+export const afficheAccueil = () =>{
+    return axios.get("http://localhost/Connection")
+}

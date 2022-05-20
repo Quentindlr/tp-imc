@@ -1,18 +1,21 @@
+import { Form } from "antd";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { addUser } from "../service/serviceUser";
 import { withNavigate } from "../tools/navigate";
+import { Input, Button, Checkbox } from 'antd';
+import 'antd/dist/antd.css';
 
 class FormInsc extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user:{ 
-                nom : undefined,
-                mdp : undefined,
-                age : undefined,
-                taille : undefined,
-                poids : undefined
+            user: {
+                nom: undefined,
+                mdp: undefined,
+                age: undefined,
+                taille: undefined,
+                poids: undefined
             },
         }
     }
@@ -20,24 +23,22 @@ class FormInsc extends Component {
     fieldsOnChange = (e) => {
         const tmpUser = this.state.user
         tmpUser[e.target.getAttribute("name")] = e.target.value
-        this.setState({user:{...tmpUser}})
+        this.setState({ user: { ...tmpUser } })
     }
 
     confirm = (e) => {
         e.preventDefault()
-        addUser({...this.state.user})
-        .then(res => {
-            if(res.data.error == false) {
-                this.props.navigate("/login")
-            }else{
-                alert("donnée manquante")
-            }
-        })
+        addUser({ ...this.state.user })
+            .then(res => {
+                
+                    this.props.navigate("/connexion")
+                
+            })
     }
 
-    state = {  }
-    render() { 
-        return ( 
+    state = {}
+    render() {
+        return (
             <form onSubmit={this.confirm}>
                 <div>
                     <label>Name : </label>
@@ -71,8 +72,106 @@ class FormInsc extends Component {
                 <div>connexion</div>
             </Link>
             </form>
-         );
+
+            // <Form
+            //     onSubmit={this.confirm}
+            //     name="basic"
+            //     labelCol={{
+            //         span: 8,
+            //     }}
+            //     wrapperCol={{
+            //         span: 16,
+            //     }}
+            //     initialValues={{
+            //         remember: true,
+            //     }}
+            //     autoComplete="off"
+            // >
+            //     <Form.Item
+            //         onChange={this.fieldsOnChange}
+            //         label="Username"
+            //         name="username"
+            //         rules={[
+            //             {
+            //                 required: true,
+            //                 message: 'Please input your username!',
+            //             },
+            //         ]}
+            //     >
+            //         <Input />
+            //     </Form.Item>
+
+            //     <Form.Item
+            //         onChange={this.fieldsOnChange}
+            //         label="Password"
+            //         name="password"
+            //         rules={[
+            //             {
+            //                 required: true,
+            //                 message: 'Please input your password!',
+            //             },
+            //         ]}
+            //     >
+            //         <Input.Password />
+            //     </Form.Item>
+
+            //     <Form.Item
+            //         onChange={this.fieldsOnChange}
+            //         label="age"
+            //         name="age"
+            //         rules={[
+            //             {
+            //                 required: true,
+            //                 message: 'Please input your age!',
+            //             },
+            //         ]}
+            //     >
+            //         <Input />
+            //     </Form.Item>
+
+            //     <Form.Item
+            //         onChange={this.fieldsOnChange}
+            //         label="taille"
+            //         name="taille"
+            //         rules={[
+            //             {
+            //                 required: true,
+            //                 message: 'Please input your taille!',
+            //             },
+            //         ]}
+            //     >
+            //         <Input />
+            //     </Form.Item>
+
+            //     <Form.Item
+            //         onChange={this.fieldsOnChange}
+            //         label="poids"
+            //         name="poids"
+            //         rules={[
+            //             {
+            //                 required: true,
+            //                 message: 'Please input your poids!',
+            //             },
+            //         ]}
+            //     >
+            //         <Input />
+            //     </Form.Item>
+
+            //     <Form.Item
+            //         wrapperCol={{
+            //             offset: 8,
+            //             span: 16,
+            //         }}
+            //     >
+            //         <Button type="submit" htmlType="submit">
+            //             Validation
+            //         </Button>
+            //     </Form.Item>
+            // </Form>
+
+
+        );
     }
 }
- 
-export default FormInsc;
+
+export default withNavigate(FormInsc);
