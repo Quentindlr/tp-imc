@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
+
+
+
+div {
+
+    display: block;
+
+
+
+
+}
+
+
+
+navbar {
+
+    height: 100%;
+
+    float: left;
+
+    position: relative;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0;
+
+    background: transparent;
+
+
+
+}
+
+
+
+body {
+
+    font-family: 'Macondo' cursive;
+
+    float: left;
+
+    justify-content: center;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    background: linear-gradient(black, transparent);
+
+   
+
+
+
+}
+
+
+
+.app {
+
+    float: left;
+
+    width: auto;
+
+    min-height: 100vh;
+
+    display: block;
+
+    flex-direction: column;
+
+
+
+
+}
+
+
+
+nav {
+
+    font-family: 'Macondo' cursive;
+
+    font-size: 12px;
+
+    background-color: transparent;
+
+    flex-flow: column;
+
+
+
+}
+
+

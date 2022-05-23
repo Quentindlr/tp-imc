@@ -1,17 +1,17 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { afficheAccueil, log } from "../service/serviceUser";
 import { withNavigate } from "../tools/navigate";
 import { Form, Input, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
+import { recupIMC, login } from "../service/serviceUser";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {
-        nom: undefined,
-        mdp: undefined,
+        Nom: undefined,
+        Mdp: undefined,
       }
     }
   }
@@ -23,11 +23,22 @@ class Login extends Component {
 
   confirm = (e) => {
     e.preventDefault()
-    afficheAccueil({ ...this.state.user })
-      .then(res => {
-        this.props.navigate("/accueil")
+    login({ ...this.state.user })
+    .then(res => {
+        // console.log({...this.state.user});
+        // console.log(res.data.erreur);
+        // console.log(res.data.messaage);
+        if (res.data.erreur == false) {
+          this.props.navigate("/accueil")
+        }
+        else{
+          alert(res.data.message)
+        }
       })
+
+      // recupIMC({ ...this.state.user })
   }
+
 
   state = {}
   render() {
@@ -35,11 +46,11 @@ class Login extends Component {
       <form onSubmit={this.confirm}>
         <div>
           <label>Name : </label>
-          <input type="text" name="nom" onChange={this.fieldsOnChange} placeholder="Name" />
+          <input type="text" name="Nom" onChange={this.fieldsOnChange} placeholder="Name" />
         </div>
         <div>
           <label>Password : </label>
-          <input type="text" name="mdp" onChange={this.fieldsOnChange} placeholder="Password" />
+          <input type="password" name="Mdp" onChange={this.fieldsOnChange} placeholder="Password" />
         </div>
         <div>
           <button type="submit">
