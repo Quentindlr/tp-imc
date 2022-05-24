@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
-import { afficheIMC, login } from "../service/serviceUser";
-
 export default function Accueil() {
 
 
 
-    const IMC = afficheIMC() 
+
+    
+    const IMC = JSON.parse(localStorage.getItem("user"))
+
+
+    console.log(JSON.parse(localStorage.getItem("user")));
+
+
 
 
 

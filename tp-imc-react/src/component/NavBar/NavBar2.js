@@ -1,7 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { afficheId, newImc } from "../../service/serviceUser";
+import { afficheIMC, newImc } from "../../service/serviceUser";
 import Modal from "react-modal"
+import { withNavigate } from "../../tools/navigate";
 
 class NavBar extends Component {
     constructor(props) {
@@ -11,13 +12,17 @@ class NavBar extends Component {
                 poids: undefined,
                 taille: undefined
             },
-            showModal:false,
+            showModal: false,
         }
-            
+
     }
 
-    openModal = () =>{
-        this.setState({showModal:true})
+    openModal = () => {
+        this.setState({ showModal: true })
+    }
+
+    closeModal = () => {
+        this.setState({ showModal: false })
     }
 
     fieldsOnChange = (e) => {
@@ -27,74 +32,88 @@ class NavBar extends Component {
     }
 
     confirm = (e) => {
-        e.preventDefault()
-        let id = afficheId()
-        newImc({ ...this.state.imc },id)
+        // e.preventDefault()
+        let id = localStorage.getItem("id")
+        newImc({ ...this.state.imc }, id)
             .then(res => {
-                
-                this.setState({showModal:false})
-                
+                console.log("slt");
+                // this.setState({showModal:false})  
+                afficheIMC()
             })
     }
 
-    render() { 
-        return ( <>
+    deco = (e) => {
+        localStorage.clear()
+        this.props.navigate("/connexion")
+    }
 
-            <div className="bg-white" id="sidebar">
+    render() {
+        return (<>
 
-                <div className="py-4 px-3 mb-4 bg-light">
+                <nav className="nav flex-column bg-dark" style={{ width: "13rem", height: "100rem" }}>
+                    <h4 className="row align-self-center">React Imc</h4>
+                    <div className="row align-self-center">Vincent</div>
+                    <div className="row align-self-center">Periode des saisies</div>
+                    <Link className="row align-self-center" to="/connexion">Semaine</Link>
+                    <Link className="row align-self-center" to="/connexion">Mois</Link>
+                    <Link className="row align-self-center" to="/connexion">Trimestre</Link>
 
-                    <div className="media d-flex align-items-center">
+                    <div className="mb-3 row align-self-center">
+                        <button className="btn btn-primary" style={{ width: "125px" }} type="button" onClick={this.openModal}  >Saisir Poids</button><br />
+                        <Modal isOpen={this.state.showModal} >
 
-                        <div className="media-body">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
 
-                            <h2 className="m-0">React Imc</h2>
+                                        <h4 className="modal-title">Saisir nouvelle IMC</h4>
 
-                            <div className="card p-2" style={{ width: "100px" }}>Vincent</div>
+                                        <form onSubmit={this.confirm}>
+                                            <div className="mb-3">
+                                                <label className="form-label">Poids : </label>
+                                                <input className="form-control" type="text" name="poids" onChange={this.fieldsOnChange} placeholder="Poids" />
+                                            </div>
 
-                            <p className="m-0">Periode des saisies</p>
+                                            <div className="mb-3">
+                                                <label className="form-label">Taille : </label>
+                                                <input className="form-control" type="text" name="taille" onChange={this.fieldsOnChange} placeholder="Taille" />
+                                            </div>
+                                            <button className="btn btn-secondary" type="submit" onClick={this.closeModal}>Close</button>
+                                            <button className="btn btn-primary" type="submit">Entrer</button>
+                                        </form>
 
-                            <Link to="/connexion">Semaine</Link> <br />
+                                    </div>
+                                </div>
+                            </div>
 
-                            <Link to="/connexion">Mois</Link> <br />
+                        </Modal>
 
-                            <Link to="/connexion">Trimestre</Link>
+                        {/* 
+                    <Modal isOpen={this.state.showModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Saisir nouvelle IMC</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            test
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button>Close</button>
+                            <button>entrer</button>
+                        </Modal.Footer>
 
-                        </div>
+                    </Modal> */}
+
 
                     </div>
 
-                </div>
-
-            </div>
-
-            <nav className="navbar navbar-expand-lg navbar-light bg-light" id="sidebar">
-
-
-                <div>
-                    <button type="button" onClick={this.openModal}  >Saisir Poids</button><br />
-                    <Modal isOpen={this.state.showModal}
-                        ariaHideApp={false}>
-                        <h4>Saisir nouveau poid</h4>
-                        <form onSubmit={this.confirm}>
-                            <input type="text" name="poids" onChange={this.fieldsOnChange}  placeholder="Nouveau poid" />
-                            <input type="text" name="taille" onChange={this.fieldsOnChange}  placeholder="Nouveau poid" />
-                            <button type="submit">Entrer</button>
-                        </form>
-                    </Modal>
+                    <div className="mb-3 row align-self-center">
+                        <button className="btn btn-primary" style={{ width: "125px" }} type="button" onClick={this.deco} >Déconnexion</button>
+                    </div>
+                </nav>
 
 
-                </div>
-
-
-                <button type="button" >Déconnexion</button>
-
-
-
-            </nav><br />
-
-        </> );
+        </>);
     }
 }
- 
-export default NavBar;
+
+export default withNavigate(NavBar);

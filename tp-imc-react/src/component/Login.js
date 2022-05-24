@@ -1,9 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { withNavigate } from "../tools/navigate";
-import { Form, Input, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
-import { recupIMC, login } from "../service/serviceUser";
+import { login } from "../service/serviceUser";
 
 class Login extends Component {
   constructor(props) {
@@ -24,46 +23,48 @@ class Login extends Component {
   confirm = (e) => {
     e.preventDefault()
     login({ ...this.state.user })
-    .then(res => {
+      .then(res => {
         // console.log({...this.state.user});
         // console.log(res.data.erreur);
         // console.log(res.data.messaage);
         if (res.data.erreur == false) {
           this.props.navigate("/accueil")
         }
-        else{
+        else {
           alert(res.data.message)
         }
       })
 
-      // recupIMC({ ...this.state.user })
+    // recupIMC({ ...this.state.user })
   }
 
 
   state = {}
   render() {
     return (
-      <form onSubmit={this.confirm}>
-        <div>
-          <label>Name : </label>
-          <input type="text" name="Nom" onChange={this.fieldsOnChange} placeholder="Name" />
-        </div>
-        <div>
-          <label>Password : </label>
-          <input type="password" name="Mdp" onChange={this.fieldsOnChange} placeholder="Password" />
-        </div>
-        <div>
-          <button type="submit">
-            validation
-          </button>
-        </div>
-        <div>
-          si vous ne disposez pas de compte?
-        </div>
-        <Link to="/inscription">
-          <div>inscription</div>
-        </Link>
-      </form>
+      <div>
+        <form className="col-md-2 align-right" onSubmit={this.confirm}>
+          <div className="mb-3">
+            <label className="form-label">Name : </label>
+            <input className="form-control" type="text" name="Nom" onChange={this.fieldsOnChange} placeholder="Name" />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password : </label>
+            <input className="form-control" type="password" name="Mdp" onChange={this.fieldsOnChange} placeholder="Password" />
+          </div>
+          <div>
+            <button className="btn btn-primary" type="submit">
+              validation
+            </button>
+          </div>
+          <div className="form-text">
+            si vous ne disposez pas de compte?
+          </div>
+          <Link to="/inscription">
+            <div>inscription</div>
+          </Link>
+        </form>
+      </div>
 
       //     <Form
       //   name="basic"

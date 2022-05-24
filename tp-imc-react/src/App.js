@@ -12,9 +12,9 @@ class App extends React.Component {
     return (
       <div className="app">
         <BrowserRouter>
-          <NavBar />
+          <NavBar/>
           <Routes>
-            <Route path='/connexion' element={<Login />} />
+            <Route path='/connexion' element={<Login/>} />
             <Route path='/inscription' element={<FormInsc />} />
             <Route path='/accueil' element={<Accueil />} />
           </Routes>

@@ -1,7 +1,6 @@
 import axios from "axios"
 
-let users 
-let id
+
 
 export const addUser =(user) =>{
     return axios.post("http://localhost/inscription",{...user})
@@ -9,22 +8,23 @@ export const addUser =(user) =>{
 
 export function login(user){
     axios.get("http://localhost/Connection/"+user.Nom+"/"+user.Mdp).then(res =>{
-        users = res.data.connection[0].TalbeIMC
-        id = res.data.connection[0].idClient
+        localStorage.setItem("user",JSON.stringify(res.data.connection.table))
+        localStorage.setItem("id",res.data.connection.idClient)
     })
     
     return axios.get("http://localhost/Connection/"+user.Nom+"/"+user.Mdp)
 }
 
 export function afficheIMC(){
-     return users
-}
-
-export function afficheId(){
-    return id
+    const id = localStorage.getItem("id")
+    
+    axios.get("http://localhost/Acceuil/"+id).then(res =>{
+        console.log("slt");
+        localStorage.setItem("user",JSON.stringify(res.data.retourimc.table))
+    })
 }
 
 export function newImc(imc,id){
-    console.log(imc);
     return axios.post("http://localhost/NouveauImc/"+id,{...imc})
 }
+
